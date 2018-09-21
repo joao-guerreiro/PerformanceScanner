@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<ui:param name="bean" value="#{adminUserManageController}" />
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>#{bean.model.pageName}</title>
+	<link href="../css/Base.css" rel="stylesheet" type="text/css" />
+	<style type="text/css">
+.ui-datatable .ui-column-filter {
+	width: 50% !important;
+}
+</style>
+</h:head>
+
+<h:body>
+	<h:form id="form" prependId="false">
+		<p:messages id="messages" showDetail="true" closable="true">
+			<p:autoUpdate />
+		</p:messages>
+		<div class="background">
+			<div class="navbar">
+				<div class="greettext">
+					<h1 class="greettext">#{bean.model.pageName}</h1>
+				</div>
+				<div class="">
+					<a href="#{request.contextPath}/admin/users" class="navlinks">Users
+						Management</a> <a href="#{request.contextPath}/admin/reports"
+						class="navlinks">Global Report</a> <a
+						href="#{request.contextPath}/user/report" class="navlinks">My
+						Reports</a>      <a href="#{request.contextPath}/user/report/submit"
+						class="navlinks" style="font-weight: bold; font-size: 150%;">Submit
+						Report</a>      <a href="#{request.contextPath}/logout"
+						class="navlinks">Logout</a>
+				</div>
+			</div>
+			<div class="row">
+
+				<div class="col-md-12">
+					<p:dataTable style="text-align: center;" id="usersTable"
+						widgetVar="usersTable" var="item" rowKey="#{item.id}"
+						reflow="true" filteredValue="#{bean.model.filteredList}"
+						value="#{bean.model.usersList}" paginator="true" editable="true"
+						editMode="cell" paginatorAlwaysVisible="false" scrollable="true">
+
+						<p:column headerText="User" filterBy="#{item.username}"
+							filterMatchMode="in" width="150">
+							<f:facet name="filter">
+								<p:selectCheckboxMenu label="Name"
+									panelStyle="width:200px !important"
+									onchange="PF('usersTable').filter()">
+									<f:selectItems value="#{bean.model.usersDistinct}" var="user"
+										itemLabel="#{user.username}" itemValue="#{user.username}" />
+								</p:selectCheckboxMenu>
+							</f:facet>
+							<p:cellEditor>
+								<f:facet name="output">
+									<p:outputLabel value="#{item.username}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:inputText id="editName" value="#{item.username}" title="Insert Username"
+										requiredMessage="Username cannot be blank" required="true"></p:inputText>
+								<p:tooltip id="toolTipFocus" for="editName" showEvent="focus" hideEvent="blur"  />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column id="adminCol" filterBy="#{item.admin}"
+							headerText="Admin" width="150" filterMatchMode="equals">
+							<f:facet name="filter">
+								<p:selectOneButton onchange="PF('usersTable').filter()">
+									<f:converter converterId="javax.faces.Boolean" />
+									<f:selectItem itemLabel="Yes" itemValue="true" />
+									<f:selectItem itemLabel="No" itemValue="false" />
+								</p:selectOneButton>
+							</f:facet>
+							<p:cellEditor>
+								<f:facet name="output">
+									<p:outputLabel value="#{item.admin ? 'Yes': 'No'}" />
+								</f:facet>
+								<f:facet name="input">
+									<h:selectOneMenu value="#{item.admin}">
+										<f:selectItem itemLabel="Yes" itemValue="true" />
+										<f:selectItem itemLabel="No" itemValue="false" />
+									</h:selectOneMenu>
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+						<p:column id="activCol" filterBy="#{item.active}"
+							headerText="Active" width="150" filterMatchMode="equals">
+							<f:facet name="filter">
+								<p:selectOneButton onchange="PF('usersTable').filter()">
+									<f:converter converterId="javax.faces.Boolean" />
+									<f:selectItem itemLabel="Yes" itemValue="true" />
+									<f:selectItem itemLabel="No" itemValue="false" />
+								</p:selectOneButton>
+							</f:facet>
+							<p:cellEditor>
+								<f:facet name="output">
+									<p:outputLabel value="#{item.active ? 'Yes': 'No'}" />
+								</f:facet>
+								<f:facet name="input">
+									<h:selectOneMenu value="#{item.active}">
+										<f:selectItem itemLabel="Yes" itemValue="true" />
+										<f:selectItem itemLabel="No" itemValue="false" />
+									</h:selectOneMenu>
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+						<p:column width="30">
+							<p:commandButton id="deleteButton" ajax="false"
+								icon="fa fa-trash" oncomplete="PF('usersTable').filter()"
+								immediate="true" process="@this" update="@form"
+								actionListener="#{bean.deleteUser(item)}">
+							</p:commandButton>
+
+
+						</p:column>
+						<f:facet name="footer">
+							<p:commandButton value="Add new User" action="#{bean.addNewUser}"
+								oncomplete="PF('usersTable').filter()"
+								update="@([id$=usersTable])" process="@this"></p:commandButton>
+							<p:commandButton value="Confirm Changes"
+								action="#{bean.saveUsers}" update="@([id$=usersTable])" />
+						</f:facet>
+					</p:dataTable>
+				</div>
+			</div>
+
+			<div class="row">
+				<img
+					src="https://uploads-ssl.webflow.com/5a9440a8d16f79000173236c/5b588c7ee017c30906b3aeee_logo-edge.svg"
+					height="64" class="image-2" />
+			</div>
+		</div>
+	</h:form>
+
+</h:body>
+</html>

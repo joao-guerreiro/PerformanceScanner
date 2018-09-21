@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<ui:param name="bean" value="#{loginController}" />
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link href="css/Base.css" rel="stylesheet" type="text/css" />
+	<link href="css/Login.css" rel="stylesheet" type="text/css" />
+	<title>#{bean.model.appName}</title>
+</h:head>
+
+<h:body>
+	<div class="background">
+		<div class="logolarge">
+			<img
+				src="https://uploads-ssl.webflow.com/5a9440a8d16f79000173236c/5b588c7ee017c30906b3aeee_logo-edge.svg"
+				width="256" class="image" />
+		</div>
+		<div class="appname">
+			<h1 class="appname">#{bean.model.appName}</h1>
+		</div>
+		<h:form prependId="false">
+			<div class="formblock w-form">
+				<p:outputLabel value="Login failed!" styleClass="red"
+					rendered="${!empty param['error']}" />
+				<p:inputText id="username" placeholder="Username"
+					styleClass="w-input"></p:inputText>
+				<p:password id="password" placeholder="Password"
+					styleClass="w-input"></p:password>
+				<p:commandButton value="Login" ajax="false"></p:commandButton>
+			</div>
+		</h:form>
+
+
+
+	</div>
+</h:body>
+</html>

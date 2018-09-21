@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<ui:param name="bean" value="#{usersReportController}" />
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>#{bean.model.pageName}</title>
+	<link href="../css/Base.css" rel="stylesheet" type="text/css" />
+
+
+	<style type="text/css">
+.ui-widget-header .ui-datatable-scrollable-header {
+	height: 20vh;
+}
+</style>
+</h:head>
+<h:body>
+	<div class="background">
+		<div class="navbar">
+			<div class="greettext">
+				<h1 class="greettext">#{bean.model.pageName}</h1>
+			</div>
+			<div class="">
+				<a href="#{request.contextPath}/admin/users" class="navlinks">Users
+					Management</a> <a href="#{request.contextPath}/admin/reports"
+					class="navlinks">Global Report</a> <a
+					href="#{request.contextPath}/user/report" class="navlinks">My
+					Reports</a>      <a href="#{request.contextPath}/user/report/submit"
+					class="navlinks" style="font-weight: bold; font-size: 150%;">Submit Report</a>      <a
+					href="#{request.contextPath}/logout" class="navlinks">Logout</a>
+			</div>
+		</div>
+		<div class="col-md-12">
+			<h:form id="form">
+				<p:dataTable id="userReportTable" widgetVar="userReportTable"
+					var="week" reflow="true"
+					filteredValue="#{bean.model.filteredtList}"
+					value="#{bean.model.fullList}" paginator="true"
+					paginatorAlwaysVisible="false" scrollable="true">
+
+					<p:column headerText="User" filterBy="#{week.user.username}"
+						filterMatchMode="in">
+						<f:facet name="filter">
+							<p:selectCheckboxMenu label="Name"
+								panelStyle="width:125px !important"
+								onchange="PF('userReportTable').filter()">
+								<f:selectItems value="#{bean.model.userList}" var="user"
+									itemLabel="#{user.username}" itemValue="#{user.username}" />
+							</p:selectCheckboxMenu>
+						</f:facet>
+						<h:outputText value="#{week.user.username}" />
+					</p:column>
+					<p:column filterBy="#{week.week}"
+						filterFunction="#{bean.filterByDate}" id="weeks"
+						headerText="Weeks">
+						<f:facet name="filter">
+							<p:calendar id="calendar" showOn="button"
+								value="#{bean.model.weekLabel}" navigator="true"
+								disabledWeekends="true" pattern="dd/MM/yyyy - dd/MM/yyyy">
+								<p:ajax event="dateSelect" update="userReportTable"
+									oncomplete="PF('userReportTable').filter()" process="@this"
+									listener="#{bean.calculateWeeks}"></p:ajax>
+							</p:calendar>
+						</f:facet>
+						<h:outputText value="#{bean.getFormatWeek(week)}" />
+					</p:column>
+					<p:column headerText="Reunions">
+						<h:outputText value="#{week.meetings}" />
+					</p:column>
+					<p:column headerText="Oportunities">
+						<h:outputText value="#{week.opportunities}" />
+					</p:column>
+					<p:column headerText="Qualifications">
+						<h:outputText value="#{week.qualifications}" />
+					</p:column>
+					<p:column headerText="Monitorizations">
+						<h:outputText value="#{week.monitorings}" />
+					</p:column>
+					
+				</p:dataTable>
+			</h:form>
+		</div>
+		<div class="row">
+			<img
+				src="https://uploads-ssl.webflow.com/5a9440a8d16f79000173236c/5b588c7ee017c30906b3aeee_logo-edge.svg"
+				height="64" class="image-2" />
+		</div>
+	</div>
+</h:body>
+</html>

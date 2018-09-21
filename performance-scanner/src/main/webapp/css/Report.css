@@ -1,0 +1,190 @@
+@charset "UTF-8";
+
+body {
+	min-height: 100%;
+	text-align: center;
+	font-size: 125%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+.fillPanel {
+	margin-top: 5rem;
+}
+
+.panelHeader {
+	margin-bottom: 2.5rem;
+	margin-top: 1.5rem;
+	width: 100%;
+}
+
+.submit {
+	margin-top: 3rem !important;
+}
+
+.panelCommandButtonLogin {
+	margin-top: 3rem !important;
+}
+
+.form-block {
+	position: relative;
+	top: -125px;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	-ms-flex-direction: column;
+	flex-direction: column;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	-ms-flex-pack: justify;
+	justify-content: space-between;
+}
+
+.formfields {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	margin-top: 25px;
+	margin-bottom: 25px;
+	-webkit-justify-content: space-around;
+	-ms-flex-pack: distribute;
+	justify-content: space-around;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
+}
+
+.fieldlabel {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	margin-right: 30px;
+	margin-bottom: 14px;
+	margin-left: 30px;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	-ms-flex-direction: column;
+	flex-direction: column;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
+	color: #333;
+	font-size: 20px;
+}
+
+.form {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	-ms-flex-direction: column;
+	flex-direction: column;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
+}
+
+.inputfield {
+	width: 60px;
+}
+
+.weekselect {
+	position: relative;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
+}
+
+.arrowblock {
+	background-color: transparent;
+	margin-right: 5px;
+	margin-left: 5px;
+	color: #222;
+	font-size: 30px;
+	line-height: 30px;
+	font-weight: 900;
+	text-transform: uppercase;
+	cursor: pointer;
+	text-decoration: none;
+}
+
+.weekprimary {
+	color: #222;
+	font-size: 25px;
+	line-height: 25px;
+	text-align: center;
+}
+
+.weeksecondary {
+	color: #222;
+	font-size: 15px;
+	line-height: 15px;
+	text-align: center;
+}
+
+@media ( max-width : 991px) {
+	.formfields {
+		margin-top: 20px;
+		margin-bottom: 20px;
+	}
+	.fieldlabel {
+		margin-right: 5px;
+		margin-bottom: 10px;
+		margin-left: 5px;
+	}
+}
+
+@media ( max-width : 767px) {
+	.formfields {
+		-webkit-flex-wrap: wrap;
+		-ms-flex-wrap: wrap;
+		flex-wrap: wrap;
+	}
+	.fieldlabel {
+		margin-top: 10px;
+	}
+}
+
+#myButton {
+	background: transparent !important;
+	padding: 0 !important;
+	border: none !important;
+	background: none !important;
+	-webkit-box-shadow: none !important;
+	box-shadow: none !important;
+}
+
+.ui-icon {
+	overflow: initial !important;
+}

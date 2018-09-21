@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+<ui:param name="bean" value="#{reportController}" />
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>#{bean.model.appName}</title>
+	<link href="../../css/Base.css" rel="stylesheet" type="text/css" />
+
+	<style type="text/css">
+.ui-button.ui-button-icon-only.ui-state-default {
+	background: transparent !important;
+	padding: 0 !important;
+	border: none !important;
+	background: none !important;
+}
+
+.fieldlabel {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	margin-right: 30px;
+	margin-bottom: 14px;
+	margin-left: 30px;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	-ms-flex-direction: column;
+	flex-direction: column;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
+	font-size: 20px;
+}
+
+.form-block {
+	position: relative;
+	top: -125px;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	-ms-flex-direction: column;
+	flex-direction: column;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	-ms-flex-pack: justify;
+	justify-content: space-between;
+}
+
+.form {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	-ms-flex-direction: column;
+	flex-direction: column;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
+}
+
+.formfields {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	margin-top: 25px;
+	margin-bottom: 25px;
+	-webkit-justify-content: space-around;
+	-ms-flex-pack: distribute;
+	justify-content: space-around;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
+}
+
+#myButton {
+	background: transparent !important;
+	padding: 0 !important;
+	border: none !important;
+	background: none !important;
+	-webkit-box-shadow: none !important;
+	box-shadow: none !important;
+}
+
+.ui-icon {
+	overflow: initial !important;
+}
+
+.weekselect {
+	position: relative;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
+}
+</style>
+
+</h:head>
+
+<h:body>
+
+	<div class="background">
+		<div class="navbar">
+			<div class="greettext">
+				<h1 class="greettext">#{bean.model.pageName}</h1>
+			</div>
+			<div class="">
+				<a href="#{request.contextPath}/admin/users" class="navlinks">Users
+					Management</a> <a href="#{request.contextPath}/admin/reports"
+					class="navlinks">Global Report</a> <a
+					href="#{request.contextPath}/user/report" class="navlinks">My
+					Reports</a>      <a href="#{request.contextPath}/user/report/submit"
+					class="navlinks" style="font-weight: bold; font-size: 150%;">Submit
+					Report</a>      <a href="#{request.contextPath}/logout"
+					class="navlinks">Logout</a>
+			</div>
+		</div>
+		<div class="maincontent">
+			<div class="row">
+
+				<div class="form-block w-form">
+					<h:form id="form" styleClass="form">
+						<p:growl id="growl" showDetail="true" sticky="true" />
+
+						<div class="weekselect">
+							<p:commandButton id="previous" ajax="true"
+								process="@this,calendar" styleClass="myButton"
+								style="-webkit-box-shadow: none !important; box-shadow: none !important;color: black;text-shadow: none;overflow: initial !important;"
+								actionListener="#{bean.updateWeek(0)}" update="calendar,build"
+								icon="fa fa-chevron-left"></p:commandButton>
+							<div>
+								<p:outputLabel for="calendar" styleClass="fieldlabel" style="color:black;"
+									value="#{bean.model.weekSelectionTag}"></p:outputLabel>
+								<p:calendar id="calendar" value="#{bean.model.weekLabel}"
+									navigator="true" disabledWeekends="true" styleClass="fieldlabel"
+									pattern="dd/MM/yyyy - dd/MM/yyyy">
+									<p:ajax event="dateSelect" update="calendar" process="@this"
+										listener="#{bean.calculateWeeks}"></p:ajax>
+								</p:calendar>
+							</div>
+
+
+							<p:commandButton id="next" ajax="true" process="@this,calendar"
+								styleClass="myButton"
+								style="-webkit-box-shadow: none !important; box-shadow: none !important;color: black;text-shadow: none;overflow: initial !important;"
+								actionListener="#{bean.updateWeek(1)}" update="calendar,build"
+								icon="fa fa-chevron-right"></p:commandButton>
+						</div>
+						<!-- 					<div class="formfields"> -->
+						<!-- 						<ui:repeat id="build" var="indic" value="#{bean.array}" -->
+						<!-- 							varStatus="status"> -->
+						<!-- 							<div class="fieldlabel"> -->
+						<!-- 								<p:outputLabel id="valueName" value="#{indic}" for="valueField"></p:outputLabel> -->
+						<!-- 								<p:inputNumber id="valueField" decimalPlaces="0" -->
+						<!-- 									emptyValue="zero" maxlength="3" maxValue="999" -->
+						<!-- 									value="#{bean.model.kpiValues[status.index]}"></p:inputNumber> -->
+						<!-- 							</div> -->
+						<!-- 						</ui:repeat> -->
+						<!-- 					</div> -->
+						<h:panelGroup id="build">
+							<div class="formfields">
+								<div class="fieldlabel">
+									<p:outputLabel style="color:black;" id="valueName"
+										value="Meetings" for="valueField"></p:outputLabel>
+									<p:inputNumber id="valueField" decimalPlaces="0"
+										emptyValue="zero" maxlength="3" maxValue="999"
+										value="#{bean.currentRep.meetings}"></p:inputNumber>
+								</div>
+								<div class="fieldlabel">
+									<p:outputLabel id="valueName4" value="Opportunities"
+										style="color:black;" for="valueField4"></p:outputLabel>
+									<p:inputNumber id="valueField4" decimalPlaces="0"
+										emptyValue="zero" maxlength="3" maxValue="999"
+										value="#{bean.currentRep.opportunities}"></p:inputNumber>
+								</div>
+								<div class="fieldlabel">
+									<p:outputLabel id="valueName2" value="Qualifications"
+										style="color:black;" for="valueField2"></p:outputLabel>
+									<p:inputNumber id="valueField2" decimalPlaces="0"
+										emptyValue="zero" maxlength="3" maxValue="999"
+										value="#{bean.currentRep.qualifications}"></p:inputNumber>
+								</div>
+								<div class="fieldlabel">
+									<p:outputLabel id="valueName3" value="Monitorings"
+										style="color:black;" for="valueField3"></p:outputLabel>
+									<p:inputNumber id="valueField3" decimalPlaces="0"
+										emptyValue="zero" maxlength="3" maxValue="999"
+										value="#{bean.currentRep.monitorings}"></p:inputNumber>
+								</div>
+								
+
+							</div>
+						</h:panelGroup>
+						<p:commandButton value="#{bean.model.saveWeekTag}"
+							actionListener="#{bean.reportSubmit()}" process="@form"
+							update="@form, calendar"></p:commandButton>
+					</h:form>
+
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<img
+				src="https://uploads-ssl.webflow.com/5a9440a8d16f79000173236c/5b588c7ee017c30906b3aeee_logo-edge.svg"
+				height="64" class="image-2" />
+		</div>
+	</div>
+</h:body>
+</html>

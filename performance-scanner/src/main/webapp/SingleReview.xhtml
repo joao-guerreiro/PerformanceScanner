@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<ui:param name="bean" value="#{singleReviewBean}" />
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link href="../css/Base.css" rel="stylesheet" type="text/css" />
+	<title>#{bean.appName}</title>
+</h:head>
+
+<h:body>
+	<div class="background">
+		<div class="navbar">
+			<div class="greettext">
+				<h1 class="greettext">#{bean.model.pageName}</h1>
+			</div>
+			<div class="">
+				<a href="#{request.contextPath}/admin/users" class="navlinks">Users
+					Management</a> <a href="#{request.contextPath}/admin/reports"
+					class="navlinks">Global Report</a> <a
+					href="#{request.contextPath}/user/report" class="navlinks">My
+					Reports</a>      <a href="#{request.contextPath}/user/report/submit"
+					class="navlinks"  style="font-weight: bold; font-size: 150%;">Submit Report</a>      <a
+					href="#{request.contextPath}/logout" class="navlinks">Logout</a>
+			</div>
+		</div>
+		<div class="ui-g">
+			<div class="ui-g-12 ui-md-8 ui-lg-6">
+				<p:dataTable id="weeks" var="week" value="#{bean.model.reportList}"
+					paginator="true" paginatorAlwaysVisible="false" scrollable="true"
+					scrollHeight="300">
+					<f:facet name="header">
+					</f:facet>
+					<p:column id="weeks" headerText="Weeks">
+						<h:outputText value="#{bean.getFormatWeek(week)}" />
+					</p:column>
+					<p:column headerText="Reunions">
+						<h:outputText value="#{week.meetings}" />
+					</p:column>
+					<p:column headerText="Oportunities">
+						<h:outputText value="#{week.opportunities}" />
+					</p:column>
+					<p:column headerText="Qualifications">
+						<h:outputText value="#{week.qualifications}" />
+					</p:column>
+					<p:column headerText="Monitorizations">
+						<h:outputText value="#{week.monitorings}" />
+					</p:column>
+					
+				</p:dataTable>
+			</div>
+			<div class="ui-g-12 ui-md-6 ui-lg-4">
+				<p:chart type="line" model="#{bean.lineModel1}"
+					style="height:300px;" responsive="true" />
+			</div>
+		</div>
+		<img
+			src="https://uploads-ssl.webflow.com/5a9440a8d16f79000173236c/5b588c7ee017c30906b3aeee_logo-edge.svg"
+			height="64" class="image-2" />
+	</div>
+</h:body>
+</html>
